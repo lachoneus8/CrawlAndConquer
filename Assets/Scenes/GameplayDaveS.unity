@@ -138,12 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &85371354
 Animator:
   serializedVersion: 7
@@ -171,6 +166,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 174475042}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &85371357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 174475042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85371352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &91705091 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4698020689845371200, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
@@ -190,12 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &91705093
 Animator:
   serializedVersion: 7
@@ -223,6 +224,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1900619786}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &91705096 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 1900619786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91705091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &174475042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -674,22 +686,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ac7ccd4a74ee442981d888569cca02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allyUnits:
+  allyUnits: []
+  droneAgents:
   - {fileID: 1286225654}
-  - {fileID: 91705092}
-  - {fileID: 2045524895}
-  - {fileID: 1705427086}
-  - {fileID: 1600798974}
-  - {fileID: 1862429869}
-  - {fileID: 1818099991}
-  - {fileID: 1973022193}
-  - {fileID: 85371353}
-  - {fileID: 1034411807}
-  - {fileID: 1996350586}
-  - {fileID: 1172742946}
-  enemyUnits: []
+  - {fileID: 91705096}
+  - {fileID: 2045524899}
+  - {fileID: 1705427090}
+  - {fileID: 1600798978}
+  - {fileID: 1862429873}
+  - {fileID: 1818099995}
+  - {fileID: 1973022197}
+  - {fileID: 85371357}
+  - {fileID: 1034411811}
+  - {fileID: 1996350590}
+  - {fileID: 1172742950}
+  planningAgents:
+  - {fileID: 1205282352}
+  enemyUnits:
+  - {fileID: 6637915670086970470}
   enemyBoss: {fileID: 0}
-  planningAgents: []
   sensorTickTime: 0.2
 --- !u!4 &717452437
 Transform:
@@ -935,12 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1034411808
 Animator:
   serializedVersion: 7
@@ -968,6 +978,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 900400753}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1034411811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 900400753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034411806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1160893452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1054,12 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1172742947
 Animator:
   serializedVersion: 7
@@ -1087,6 +1103,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 178151428}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1172742950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 178151428}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172742945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1205282349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1186,14 +1213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d60a481f26d1c54082574a16c891642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smellRange: 5
-  sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 0
-  moveSpeed: 0
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
+  smellRange: 10
+  sightRange: 4
+  moveSpeed: 2.5
   communicationRange: 7
 --- !u!1001 &1265626764
 PrefabInstance:
@@ -1269,13 +1291,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1286225654 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1731343374207050463, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1186747508464229238}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1600798973 stripped
@@ -1297,12 +1319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1600798975
 Animator:
   serializedVersion: 7
@@ -1330,6 +1347,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1265626764}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1600798978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 1265626764}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600798973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1690380824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1416,12 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1705427087
 Animator:
   serializedVersion: 7
@@ -1449,6 +1472,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 877723395}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1705427090 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 877723395}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705427085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1818099990 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4698020689845371200, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
@@ -1468,12 +1502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1818099992
 Animator:
   serializedVersion: 7
@@ -1501,6 +1530,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 519962040}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1818099995 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 519962040}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818099990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1862429868 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4698020689845371200, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
@@ -1520,12 +1560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1862429870
 Animator:
   serializedVersion: 7
@@ -1553,6 +1588,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1929967768}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1862429873 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 1929967768}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862429868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1900619786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1773,12 +1819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1973022194
 Animator:
   serializedVersion: 7
@@ -1806,6 +1847,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1929484330}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1973022197 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 1929484330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973022192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1996350585 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4698020689845371200, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
@@ -1825,12 +1877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &1996350587
 Animator:
   serializedVersion: 7
@@ -1858,6 +1905,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1690380824}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1996350590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 1690380824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996350585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2045524894 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4698020689845371200, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
@@ -1877,12 +1935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
-  idleTimeAvg: 2
-  idleTimeVar: 1
-  patrolDistance: 5
   moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &2045524896
 Animator:
   serializedVersion: 7
@@ -1910,6 +1963,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5541365824785386650, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
   m_PrefabInstance: {fileID: 1160893452}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2045524899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7900896687394766980, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+  m_PrefabInstance: {fileID: 1160893452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045524894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1186747508464229238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2049,6 +2113,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2603523112741183958, guid: dc9d096299356cb4ab74c196a7c470aa, type: 3}
   m_PrefabInstance: {fileID: 6637915670086970468}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6637915670086970470 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8274220376546394061, guid: dc9d096299356cb4ab74c196a7c470aa, type: 3}
+  m_PrefabInstance: {fileID: 6637915670086970468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712458d7af2730a4db7713da6e3d8214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

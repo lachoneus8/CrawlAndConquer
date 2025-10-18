@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5541365824785386650}
   - component: {fileID: 6950108921488294706}
   - component: {fileID: 4959725260835048905}
-  - component: {fileID: 1731343374207050463}
+  - component: {fileID: 7900896687394766980}
   m_Layer: 0
   m_Name: DroneAnt
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1731343374207050463
+--- !u!114 &7900896687394766980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,14 +120,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4698020689845371200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
+  m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   smellRange: 5
   sightRange: 2
+  moveSpeed: 2
   idleTimeAvg: 2
   idleTimeVar: 1
-  patrolDistance: 5
-  moveSpeed: 2
-  curPatrolCenter: {x: 0, y: 0, z: 0}
-  curMoveTarget: {x: 0, y: 0, z: 0}
+  patrolDistance: 3

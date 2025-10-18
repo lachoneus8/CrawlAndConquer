@@ -5,10 +5,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public List<AllyUnit> allyUnits;
+    public List<DroneAgent> droneAgents;
+    public List<PlanningAgent> planningAgents;
     public List<EnemyUnit> enemyUnits;
     public EnemyBoss enemyBoss;
-    
-    public List<PlanningAgent> planningAgents;
 
     public float sensorTickTime;
 
@@ -59,13 +59,13 @@ public class GameController : MonoBehaviour
         // Refresh visible entities in case any were destroyed
         RefreshVisibleEntities();
         
-        // Handle regular ally units
-        foreach (var ally in allyUnits)
+        // Handle drone agents (reflex agents)
+        foreach (var drone in droneAgents)
         {
-            if (ally == null || ally is PlanningAgent) continue;
+            if (drone == null) continue;
             
-            List<Entity> sightedEntities = GetEntitiesInRange(ally, ally.sightRange, allVisibleEntities);
-            ally.ApplySenses(emptySmelledList, sightedEntities);
+            List<Entity> sightedEntities = GetEntitiesInRange(drone, drone.sightRange, allVisibleEntities);
+            drone.ApplySenses(emptySmelledList, sightedEntities);
         }
         
         // Handle planning agents with enhanced communication
@@ -77,6 +77,15 @@ public class GameController : MonoBehaviour
             List<PlanningAgent> nearbyPlanners = GetNearbyPlanners(planner);
             
             planner.ApplySenses(emptySmelledList, sightedEntities, nearbyPlanners);
+        }
+
+        // Handle any remaining ally units that aren't drones or planners
+        foreach (var ally in allyUnits)
+        {
+            if (ally == null || ally is DroneAgent || ally is PlanningAgent) continue;
+            
+            List<Entity> sightedEntities = GetEntitiesInRange(ally, ally.sightRange, allVisibleEntities);
+            ally.ApplySenses(emptySmelledList, sightedEntities);
         }
     }
 
