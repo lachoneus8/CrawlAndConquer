@@ -278,4 +278,9 @@ public class GameController : MonoBehaviour, IGameplayController
     {
         throw new NotImplementedException();
     }
+
+    public bool TrySpawnbuilding()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -77,4 +77,9 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     {
         throw new System.NotImplementedException();
     }
+
+    public bool TrySpawnbuilding()
+    {
+        throw new System.NotImplementedException();
+    }
 }
