@@ -10,10 +10,20 @@ public class AllyUnit : Entity
     protected List<Entity> smellRangeEntities;
     protected List<Entity> sightRangeEntities;
 
+    private Animator animator;
+
     public virtual void ApplySenses(List<Entity> smelledEntities, List<Entity> sightedEntities)
     {
         smellRangeEntities = smelledEntities;
         sightRangeEntities = sightedEntities;
+    }
+
+    protected virtual void OnStart()
+    {
+        animator = GetComponent<Animator>();
+
+        smellRangeEntities = new List<Entity>();
+        sightRangeEntities = new List<Entity>();
     }
 
     // Base movement function that can be called from derived classes
@@ -35,5 +45,13 @@ public class AllyUnit : Entity
     protected bool HasReachedTarget(Vector3 targetPosition, float threshold = 0.1f)
     {
         return Vector3.Distance(transform.position, targetPosition) < threshold;
+    }
+
+    protected void SetWalk(bool isWalking)
+    {
+        if (animator != null)
+        {
+            animator.SetBool("Walk", isWalking);
+        }
     }
 }

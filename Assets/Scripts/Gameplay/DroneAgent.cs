@@ -15,7 +15,6 @@ public class DroneAgent : AllyUnit
     public float idleTimeVar = 1f;
     public float patrolDistance = 3f;
 
-    private Animator animator;
     private Vector3 curPatrolCenter;
     private Vector3 curMoveTarget;
     private float curStateTime;
@@ -23,9 +22,10 @@ public class DroneAgent : AllyUnit
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
         curPatrolCenter = transform.position;
         curStateTime = Random.Range(0, idleTimeAvg + idleTimeVar);
+
+        base.OnStart();
     }
 
     private void Update()
@@ -168,13 +168,5 @@ public class DroneAgent : AllyUnit
     public void SetMoveTarget(Vector3 target)
     {
         curMoveTarget = target;
-    }
-
-    private void SetWalk(bool isWalking)
-    {
-        if (animator != null)
-        {
-            animator.SetBool("Walk", isWalking);
-        }
     }
 }

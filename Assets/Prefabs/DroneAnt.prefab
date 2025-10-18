@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebeb5a234e61f6349b270c5ba4566e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smellRange: 5
-  sightRange: 2
+  smellRange: 9
+  sightRange: 6
   moveSpeed: 2
   idleTimeAvg: 2
   idleTimeVar: 1
