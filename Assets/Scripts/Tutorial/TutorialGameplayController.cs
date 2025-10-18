@@ -10,7 +10,7 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     [Header("step 3 : Building Functions")]
     [Header("step 4 : Placing Buildings")]
 
-    [Header("step 5 : winning the game")]
+    [Header("step 5 : Winning the game")]
     [Tooltip("setup victory conditions")]
     public Points points;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,9 +34,15 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
         return points;
     }
 
-    public void nextTutorialStep() {
+    public void GoNextTutorialStep() {
         switch (currentTutorialStep) {
-            case 0:
+            case 1://setup step 2 : How units move
+                return;
+            case 2://setup step 3 : Building Functions
+                return;
+            case 3://setup step 4 : Placing Buildings
+                return;
+            case 4://setup step 5 : Winning the game
                 return;
             default:
                 Debug.LogWarning("moved to an invalid tutorial step");
