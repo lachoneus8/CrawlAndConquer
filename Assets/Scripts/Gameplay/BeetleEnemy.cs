@@ -24,7 +24,7 @@ public class BeetleEnemy : EnemyUnit
     protected override void Start()
     {
         base.Start();
-        originPosition = transform.position;
+        originPosition = Vector3.zero; 
         curStateTime = Random.Range(0, idleTimeAvg + idleTimeVar);
     }
 
