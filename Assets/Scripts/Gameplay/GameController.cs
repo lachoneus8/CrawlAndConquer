@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour, IGameplayController
 {
     public List<AllyUnit> allyUnits;
+    public List<DroneAgent> droneAgents;
+    public List<PlanningAgent> planningAgents;
     public List<EnemyUnit> enemyUnits;
     public EnemyBoss enemyBoss;
 
@@ -57,13 +59,32 @@ public class GameController : MonoBehaviour, IGameplayController
         // Refresh visible entities in case any were destroyed
         RefreshVisibleEntities();
         
+        // Handle drone agents (reflex agents)
+        foreach (var drone in droneAgents)
+        {
+            if (drone == null) continue;
+            
+            List<Entity> sightedEntities = GetEntitiesInRange(drone, drone.sightRange, allVisibleEntities);
+            drone.ApplySenses(emptySmelledList, sightedEntities);
+        }
+        
+        // Handle planning agents with enhanced communication
+        foreach (var planner in planningAgents)
+        {
+            if (planner == null) continue;
+            
+            List<Entity> sightedEntities = GetEntitiesInRange(planner, planner.sightRange, allVisibleEntities);
+            List<PlanningAgent> nearbyPlanners = GetNearbyPlanners(planner);
+            
+            planner.ApplySenses(emptySmelledList, sightedEntities, nearbyPlanners);
+        }
+
+        // Handle any remaining ally units that aren't drones or planners
         foreach (var ally in allyUnits)
         {
-            if (ally == null) continue;
+            if (ally == null || ally is DroneAgent || ally is PlanningAgent) continue;
             
             List<Entity> sightedEntities = GetEntitiesInRange(ally, ally.sightRange, allVisibleEntities);
-            
-            // Apply senses - empty smelled list since enemies can't be smelled
             ally.ApplySenses(emptySmelledList, sightedEntities);
         }
     }
@@ -90,5 +111,23 @@ public class GameController : MonoBehaviour, IGameplayController
     public Points GetPoints()
     {
         throw new NotImplementedException();
+    }
+    private List<PlanningAgent> GetNearbyPlanners(PlanningAgent planner)
+    {
+        List<PlanningAgent> nearbyPlanners = new List<PlanningAgent>();
+        float commRangeSqr = planner.communicationRange * planner.communicationRange;
+        
+        foreach (var otherPlanner in planningAgents)
+        {
+            if (otherPlanner == null || otherPlanner == planner) continue;
+            
+            float distanceSqr = (planner.transform.position - otherPlanner.transform.position).sqrMagnitude;
+            if (distanceSqr <= commRangeSqr)
+            {
+                nearbyPlanners.Add(otherPlanner);
+            }
+        }
+        
+        return nearbyPlanners;
     }
 }
