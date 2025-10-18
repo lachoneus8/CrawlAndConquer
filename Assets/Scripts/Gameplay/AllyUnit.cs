@@ -18,7 +18,7 @@ public class AllyUnit : Entity
         sightRangeEntities = sightedEntities;
     }
 
-    protected virtual void OnStart()
+    protected virtual void Start()
     {
         animator = GetComponent<Animator>();
 

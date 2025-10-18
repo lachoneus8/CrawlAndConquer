@@ -1,9 +1,10 @@
 ﻿
 
-public class EnemyBoss : Entity
+public class EnemyBoss : EnemyUnit
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
     }
 
     private void Update()

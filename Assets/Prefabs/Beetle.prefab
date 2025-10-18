@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2603523112741183958}
   - component: {fileID: 7422635259647094441}
   - component: {fileID: 3789529497399648725}
-  - component: {fileID: 8274220376546394061}
+  - component: {fileID: 2147770957866237085}
+  - component: {fileID: 2692988496566490192}
   m_Layer: 0
   m_Name: Beetle
   m_TagString: Untagged
@@ -111,7 +112,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8274220376546394061
+--- !u!114 &2147770957866237085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,6 +121,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 107996916368728401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 712458d7af2730a4db7713da6e3d8214, type: 3}
+  m_Script: {fileID: 11500000, guid: 9acb2f7bb613a8a4a8d22c1707167b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sightRange: 12
+  moveSpeed: 1.8
+  idleTimeAvg: 3
+  idleTimeVar: 1.5
+  wanderDistance: 6
+  maxDistanceFromOrigin: 30
+--- !u!61 &2692988496566490192
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107996916368728401}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.64, y: 0.64}
+  m_EdgeRadius: 0
