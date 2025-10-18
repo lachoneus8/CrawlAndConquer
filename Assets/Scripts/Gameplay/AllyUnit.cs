@@ -33,6 +33,12 @@ public class AllyUnit : Entity
 
     private EAllyState curState = EAllyState.Idle;
 
+    public void ApplySenses(List<Entity> smelledEntities, List<Entity> sightedEntities)
+    {
+        smellRangeEntities = smelledEntities;
+        sightRangeEntities = sightedEntities;
+    }
+
     private void Start()
     {
         animator = GetComponent<Animator>();
