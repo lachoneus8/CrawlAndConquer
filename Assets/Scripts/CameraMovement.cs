@@ -5,7 +5,9 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public float panSpeed = 20f;
+    [Tooltip("how close to edge of screen you need to place mouse to start panning")]
     public float panBorderThickness = 10f;
+    [Tooltip("size of the map")]
     public Vector2 panLimits = new Vector2(100, 100);
 
     void LateUpdate()
