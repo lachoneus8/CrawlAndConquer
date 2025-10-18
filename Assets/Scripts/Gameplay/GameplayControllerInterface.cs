@@ -7,7 +7,7 @@ public struct Points
     public uint startingPoints;
     [Tooltip("how many points needed for victory")]
     public uint victoryPoints;
-    [HideInInspector]
+    [Tooltip("current points, set automatically")]
     public uint currentPoints;
 }
 

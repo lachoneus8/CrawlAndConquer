@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TutorialMenuController : MonoBehaviour, IGameplayController
+public class TutorialMenuController : MonoBehaviour
 {
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,8 +20,4 @@ public class TutorialMenuController : MonoBehaviour, IGameplayController
         SceneManager.LoadSceneAsync(2);
     }
 
-    public Points GetPoints()
-    {
-        throw new System.NotImplementedException();
-    }
 }
