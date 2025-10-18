@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour, IGameplayController
     private List<AllyUnit> allyUnits;
     private List<EnemyUnit> enemyUnits;
 
+    // Destruction tracking
+    private List<Entity> entitiesToRemove = new List<Entity>();
 
     private void Start()
     {
@@ -47,7 +49,74 @@ public class GameController : MonoBehaviour, IGameplayController
         {
             SensorTick();
             timeToNextSensorTick = sensorTickTime;
-        }    
+        }
+        
+        // Process entity removal at end of frame
+        ProcessEntityRemoval();
+    }
+
+    public void OnEntityDestroyed(Entity entity)
+    {
+        // Queue entity for removal to avoid modifying lists during iteration
+        if (!entitiesToRemove.Contains(entity))
+        {
+            entitiesToRemove.Add(entity);
+        }
+    }
+
+    private void ProcessEntityRemoval()
+    {
+        if (entitiesToRemove.Count == 0) return;
+
+        foreach (Entity entity in entitiesToRemove)
+        {
+            RemoveEntityFromLists(entity);
+        }
+
+        entitiesToRemove.Clear();
+    }
+
+    private void RemoveEntityFromLists(Entity entity)
+    {
+        if (entity == null) return;
+
+        // Remove from ally lists
+        if (entity is DroneAgent drone)
+        {
+            droneAgents.Remove(drone);
+            allyUnits.Remove(drone);
+        }
+        else if (entity is PlanningAgent planner)
+        {
+            planningAgents.Remove(planner);
+            allyUnits.Remove(planner);
+        }
+        else if (entity is AllyUnit ally)
+        {
+            allyUnits.Remove(ally);
+        }
+
+        // Remove from enemy lists
+        if (entity is BeetleEnemy beetle)
+        {
+            beetleEnemies.Remove(beetle);
+            enemyUnits.Remove(beetle);
+        }
+        else if (entity is EnemyBoss boss)
+        {
+            if (enemyBoss == boss)
+            {
+                enemyBoss = null;
+            }
+            enemyUnits.Remove(boss);
+        }
+        else if (entity is EnemyUnit enemy)
+        {
+            enemyUnits.Remove(enemy);
+        }
+
+        // Remove from visible entities list
+        allVisibleEntities.Remove(entity);
     }
 
     private void RefreshVisibleEntities()
@@ -72,7 +141,7 @@ public class GameController : MonoBehaviour, IGameplayController
         RefreshVisibleEntities();
         
         // Handle drone agents (reflex agents)
-        foreach (var drone in droneAgents)
+        foreach (var drone in droneAgents.ToArray()) // Use ToArray to avoid modification during iteration
         {
             if (drone == null) continue;
             
@@ -81,7 +150,7 @@ public class GameController : MonoBehaviour, IGameplayController
         }
         
         // Handle planning agents with enhanced communication
-        foreach (var planner in planningAgents)
+        foreach (var planner in planningAgents.ToArray())
         {
             if (planner == null) continue;
             
@@ -92,7 +161,7 @@ public class GameController : MonoBehaviour, IGameplayController
         }
 
         // Handle any remaining ally units that aren't drones or planners
-        foreach (var ally in allyUnits)
+        foreach (var ally in allyUnits.ToArray())
         {
             if (ally == null || ally is DroneAgent || ally is PlanningAgent) continue;
             
@@ -101,7 +170,7 @@ public class GameController : MonoBehaviour, IGameplayController
         }
 
         // Handle beetle enemies
-        foreach (var beetle in beetleEnemies)
+        foreach (var beetle in beetleEnemies.ToArray())
         {
             if (beetle == null) continue;
             
@@ -152,6 +221,7 @@ public class GameController : MonoBehaviour, IGameplayController
     {
         throw new NotImplementedException();
     }
+
     private List<PlanningAgent> GetNearbyPlanners(PlanningAgent planner)
     {
         List<PlanningAgent> nearbyPlanners = new List<PlanningAgent>();
@@ -169,5 +239,28 @@ public class GameController : MonoBehaviour, IGameplayController
         }
         
         return nearbyPlanners;
+    }
+
+    // Optional: Methods to check game state
+    public bool AreAllAlliesDead()
+    {
+        return droneAgents.Count == 0 && planningAgents.Count == 0;
+    }
+
+    public bool AreAllEnemiesDead()
+    {
+        return beetleEnemies.Count == 0 && enemyBoss == null;
+    }
+
+    public int GetAllyCount()
+    {
+        return droneAgents.Count + planningAgents.Count;
+    }
+
+    public int GetEnemyCount()
+    {
+        int count = beetleEnemies.Count;
+        if (enemyBoss != null) count++;
+        return count;
     }
 }

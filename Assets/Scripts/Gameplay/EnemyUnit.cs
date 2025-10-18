@@ -7,6 +7,7 @@ public class EnemyUnit : Entity
     public float moveSpeed = 1.8f;
 
     private Animator animator;
+    private Rigidbody2D rb2d;
     protected List<Entity> sightRangeEntities;
 
     public virtual void ApplySenses(List<Entity> sightedEntities)
@@ -17,6 +18,18 @@ public class EnemyUnit : Entity
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
+        
+        // Get or add Rigidbody2D for collision detection
+        rb2d = GetComponent<Rigidbody2D>();
+        if (rb2d == null)
+        {
+            rb2d = gameObject.AddComponent<Rigidbody2D>();
+        }
+
+        // Configure Rigidbody2D for kinematic movement
+        rb2d.bodyType = RigidbodyType2D.Kinematic;
+        rb2d.gravityScale = 0f;
+        
         sightRangeEntities = new List<Entity>();
     }
 

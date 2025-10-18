@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -452,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb2f7bb613a8a4a8d22c1707167b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   sightRange: 12
   moveSpeed: 1.8
   idleTimeAvg: 3
@@ -1072,6 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb2f7bb613a8a4a8d22c1707167b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   sightRange: 12
   moveSpeed: 1.8
   idleTimeAvg: 3
@@ -1129,6 +1133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -1254,6 +1259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -1468,6 +1474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -1593,6 +1600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -1651,6 +1659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -1709,6 +1718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -1968,6 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -2026,6 +2037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2
@@ -2084,6 +2096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3742c241f8b18d4486b08a970933199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 5
   sightRange: 2
   moveSpeed: 2

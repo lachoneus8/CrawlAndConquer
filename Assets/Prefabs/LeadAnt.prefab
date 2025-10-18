@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d60a481f26d1c54082574a16c891642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCollisionDestruction: 1
   smellRange: 18
   sightRange: 9
   moveSpeed: 2.5
@@ -158,7 +159,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

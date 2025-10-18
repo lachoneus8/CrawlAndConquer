@@ -11,6 +11,7 @@ public class AllyUnit : Entity
     protected List<Entity> sightRangeEntities;
 
     private Animator animator;
+    private Rigidbody2D rb2d;
 
     public virtual void ApplySenses(List<Entity> smelledEntities, List<Entity> sightedEntities)
     {
@@ -21,6 +22,17 @@ public class AllyUnit : Entity
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
+        
+        // Get or add Rigidbody2D for collision detection
+        rb2d = GetComponent<Rigidbody2D>();
+        if (rb2d == null)
+        {
+            rb2d = gameObject.AddComponent<Rigidbody2D>();
+        }
+        
+        // Configure Rigidbody2D for kinematic movement
+        rb2d.bodyType = RigidbodyType2D.Kinematic;
+        rb2d.gravityScale = 0f;
 
         smellRangeEntities = new List<Entity>();
         sightRangeEntities = new List<Entity>();
