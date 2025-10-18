@@ -12,14 +12,14 @@ public class AllyUnit : Entity
         Attack
     }
 
-    public float smellRange;
-    public float sightRange;
+    public float smellRange = 5f;
+    public float sightRange = 2f;
 
-    public float idleTimeAvg;
-    public float idleTimeVar;
+    public float idleTimeAvg = 2f;
+    public float idleTimeVar = 1f;
 
-    public float patrolDistance;
-    public float moveSpeed;
+    public float patrolDistance = 3f;
+    public float moveSpeed = 2f;
 
     private Animator animator;
 

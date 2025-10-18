@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     public List<AllyUnit> allyUnits;
     public List<EnemyUnit> enemyUnits;
     public EnemyBoss enemyBoss;
+    
+    public List<PlanningAgent> planningAgents;
 
     public float sensorTickTime;
 
@@ -57,14 +59,24 @@ public class GameController : MonoBehaviour
         // Refresh visible entities in case any were destroyed
         RefreshVisibleEntities();
         
+        // Handle regular ally units
         foreach (var ally in allyUnits)
         {
-            if (ally == null) continue;
+            if (ally == null || ally is PlanningAgent) continue;
             
             List<Entity> sightedEntities = GetEntitiesInRange(ally, ally.sightRange, allVisibleEntities);
-            
-            // Apply senses - empty smelled list since enemies can't be smelled
             ally.ApplySenses(emptySmelledList, sightedEntities);
+        }
+        
+        // Handle planning agents with enhanced communication
+        foreach (var planner in planningAgents)
+        {
+            if (planner == null) continue;
+            
+            List<Entity> sightedEntities = GetEntitiesInRange(planner, planner.sightRange, allVisibleEntities);
+            List<PlanningAgent> nearbyPlanners = GetNearbyPlanners(planner);
+            
+            planner.ApplySenses(emptySmelledList, sightedEntities, nearbyPlanners);
         }
     }
 
@@ -85,5 +97,24 @@ public class GameController : MonoBehaviour
         }
         
         return entitiesInRange;
+    }
+
+    private List<PlanningAgent> GetNearbyPlanners(PlanningAgent planner)
+    {
+        List<PlanningAgent> nearbyPlanners = new List<PlanningAgent>();
+        float commRangeSqr = planner.communicationRange * planner.communicationRange;
+        
+        foreach (var otherPlanner in planningAgents)
+        {
+            if (otherPlanner == null || otherPlanner == planner) continue;
+            
+            float distanceSqr = (planner.transform.position - otherPlanner.transform.position).sqrMagnitude;
+            if (distanceSqr <= commRangeSqr)
+            {
+                nearbyPlanners.Add(otherPlanner);
+            }
+        }
+        
+        return nearbyPlanners;
     }
 }
