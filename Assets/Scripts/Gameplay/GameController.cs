@@ -269,17 +269,17 @@ public class GameController : MonoBehaviour, IGameplayController
         throw new NotImplementedException();
     }
 
-    public int GetNumPlaceableBuildings()
+    public int GetNumPlaceableBuildings(BuildingType type)
     {
         throw new NotImplementedException();
     }
 
-    public void AddPlaceableBuilding()
+    public void AddPlaceableBuilding(BuildingType type)
     {
         throw new NotImplementedException();
     }
 
-    public bool IsSpawnbuildingAvailible()
+    public bool IsSpawnbuildingAvailible(BuildingType type)
     {
         throw new NotImplementedException();
         /*
@@ -292,7 +292,7 @@ public class GameController : MonoBehaviour, IGameplayController
         return true;*/
     }
 
-    public bool TrySpawnbuilding(Vector3 SpawnPosition)
+    public bool TrySpawnbuilding(Vector3 SpawnPosition, BuildingType type,GameObject prefab)
     {
         throw new NotImplementedException();
     }

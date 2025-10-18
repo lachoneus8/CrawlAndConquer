@@ -23,7 +23,7 @@ public class BuildingPlacementUI : MonoBehaviour
     public GameObject selectedIndicator;
     public List<BuildingPlacementUI> otherBuildingPlacementUIs;
 
-
+    public BuildingType buildingType;
     public GameObject buildingPrefab;
 
     [Header("SFX")]
@@ -32,6 +32,7 @@ public class BuildingPlacementUI : MonoBehaviour
 
     private void Start()
     {
+        controller = gameplayController.GetComponent<IGameplayController>();
         timeTillAvailible = rechargeTime;
     }
 
@@ -44,7 +45,7 @@ public class BuildingPlacementUI : MonoBehaviour
         }
         if (MaxCharges > 0)
         {
-            if (controller.GetNumPlaceableBuildings() >= MaxCharges)
+            if (controller.GetNumPlaceableBuildings(buildingType) >= MaxCharges)
             {
                 Debug.Log("player at max number of charges for placeable buildings");
                 UpdateUI();
@@ -56,33 +57,36 @@ public class BuildingPlacementUI : MonoBehaviour
 
         if (timeTillAvailible <= 0)
         {
-            controller.AddPlaceableBuilding();
+            controller.AddPlaceableBuilding(buildingType);
             timeTillAvailible = rechargeTime;
         }
-
-        UpdateUI();
-
-        if (Input.GetMouseButtonDown(0) && isBuildingSelectedForPlacement && controller.IsSpawnbuildingAvailible())
+        if (Input.GetMouseButtonDown(0) && isBuildingSelectedForPlacement && controller.IsSpawnbuildingAvailible(buildingType))
         {
+
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            controller.TrySpawnbuilding(mousePosition);
+            controller.TrySpawnbuilding(mousePosition, buildingType, buildingPrefab);
             //audioSource.PlayOneShot(spawnbuildingSFX);
         }
+        UpdateUI();
+
+        
     }
 
     private void UpdateUI()
     {
         // Update filling circle based on timeTillAvailible
         fillCircle.fillAmount = 1 - (timeTillAvailible / rechargeTime);
-        displayNumText.text = "" + controller.GetNumPlaceableBuildings();
+        displayNumText.text = "" + controller.GetNumPlaceableBuildings(buildingType);
     }
 
     public void SelectBuilding()
     {
         isBuildingSelectedForPlacement = !isBuildingSelectedForPlacement;
-        foreach (BuildingPlacementUI building in otherBuildingPlacementUIs) {
-            building.isBuildingSelectedForPlacement = false;
-            building.selectedIndicator.SetActive(isBuildingSelectedForPlacement);
+        if(!(otherBuildingPlacementUIs is null)) { 
+            foreach (BuildingPlacementUI building in otherBuildingPlacementUIs) {
+               building.isBuildingSelectedForPlacement = false;
+                building.selectedIndicator.SetActive(isBuildingSelectedForPlacement);
+            }
         }
         selectedIndicator.SetActive(isBuildingSelectedForPlacement);
     }

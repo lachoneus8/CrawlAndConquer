@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TutorialGameplayController : MonoBehaviour, IGameplayController
 {
@@ -14,6 +15,8 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     [Tooltip("setup victory conditions")]
     public Points points;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public Dictionary<BuildingType, int> buildingsAvailible = new Dictionary<BuildingType, int> { { BuildingType.Beacon, 0 }, { BuildingType.WorkerSpawner, 0 }, };
     void Start()
     {
         if (points.currentPoints == points.victoryPoints)
@@ -65,26 +68,42 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
 
     public bool IsGameOver()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
-    public int GetNumPlaceableBuildings()
+    public int GetNumPlaceableBuildings(BuildingType type)
     {
-        throw new System.NotImplementedException();
+        if (buildingsAvailible.TryGetValue(type, out int result))
+        {
+            return result;
+        }
+        return 0;
     }
 
-    public void AddPlaceableBuilding()
+    public void AddPlaceableBuilding(BuildingType type)
     {
-        throw new System.NotImplementedException();
+        if (buildingsAvailible.ContainsKey(type))
+        {
+            buildingsAvailible[type]+=1;
+        }
     }
 
-    public bool IsSpawnbuildingAvailible()
+    public bool IsSpawnbuildingAvailible(BuildingType type)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
-    public bool TrySpawnbuilding(Vector3 SpawnPosition)
+    public bool TrySpawnbuilding(Vector3 SpawnPosition, BuildingType type, GameObject prefab)
     {
-        throw new System.NotImplementedException();
+        if (!buildingsAvailible.ContainsKey(type))
+        {
+            Debug.LogWarning("tried to spawn building of type "+type+" but that type didnt exist in dictionary.");
+            return false;
+        }
+        buildingsAvailible[type] -= 1;
+        GameObject building = Instantiate(prefab);//todo set parent
+        building.transform.position = SpawnPosition;
+        //add this to relevant lists of game object entities
+        return true;
     }
 }

@@ -10,13 +10,20 @@ public struct Points
     [Tooltip("current points, set automatically")]
     public uint currentPoints;
 }
+[System.Serializable]
+public enum BuildingType
+{
+    None,
+    Beacon,
+    WorkerSpawner,
+}
 
 public interface IGameplayController
 {
     public Points GetPoints();
     public bool IsGameOver();
-    public int GetNumPlaceableBuildings();
-    public void AddPlaceableBuilding();
-    public bool IsSpawnbuildingAvailible();
-    public bool TrySpawnbuilding(Vector3 SpawnPosition);
+    public int GetNumPlaceableBuildings(BuildingType type);
+    public void AddPlaceableBuilding(BuildingType type);
+    public bool IsSpawnbuildingAvailible(BuildingType type);
+    public bool TrySpawnbuilding(Vector3 SpawnPosition, BuildingType type, GameObject prefab);
 }
