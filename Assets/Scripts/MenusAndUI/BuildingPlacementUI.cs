@@ -18,6 +18,17 @@ public class BuildingPlacementUI : MonoBehaviour
     [Tooltip("Game object in scene that has a component that implements IGameplayController")]
     public GameObject gameplayController;
     private IGameplayController controller;
+    
+    public bool isBuildingSelectedForPlacement;
+    public GameObject selectedIndicator;
+    public List<BuildingPlacementUI> otherBuildingPlacementUIs;
+
+
+    public GameObject buildingPrefab;
+
+    [Header("SFX")]
+    public AudioSource audioSource;
+    public AudioClip spawnbuildingSFX;
 
     private void Start()
     {
@@ -50,6 +61,13 @@ public class BuildingPlacementUI : MonoBehaviour
         }
 
         UpdateUI();
+
+        if (Input.GetMouseButtonDown(0) && isBuildingSelectedForPlacement && controller.IsSpawnbuildingAvailible())
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            controller.TrySpawnbuilding(mousePosition);
+            //audioSource.PlayOneShot(spawnbuildingSFX);
+        }
     }
 
     private void UpdateUI()
@@ -57,6 +75,16 @@ public class BuildingPlacementUI : MonoBehaviour
         // Update filling circle based on timeTillAvailible
         fillCircle.fillAmount = 1 - (timeTillAvailible / rechargeTime);
         displayNumText.text = "" + controller.GetNumPlaceableBuildings();
+    }
+
+    public void SelectBuilding()
+    {
+        isBuildingSelectedForPlacement = !isBuildingSelectedForPlacement;
+        foreach (BuildingPlacementUI building in otherBuildingPlacementUIs) {
+            building.isBuildingSelectedForPlacement = false;
+            building.selectedIndicator.SetActive(isBuildingSelectedForPlacement);
+        }
+        selectedIndicator.SetActive(isBuildingSelectedForPlacement);
     }
 }
 

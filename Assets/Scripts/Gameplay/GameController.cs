@@ -291,4 +291,9 @@ public class GameController : MonoBehaviour, IGameplayController
         NumPlaceableBuildings--;
         return true;*/
     }
+
+    public bool TrySpawnbuilding(Vector3 SpawnPosition)
+    {
+        throw new NotImplementedException();
+    }
 }

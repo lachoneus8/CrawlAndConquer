@@ -82,4 +82,9 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     {
         throw new System.NotImplementedException();
     }
+
+    public bool TrySpawnbuilding(Vector3 SpawnPosition)
+    {
+        throw new System.NotImplementedException();
+    }
 }

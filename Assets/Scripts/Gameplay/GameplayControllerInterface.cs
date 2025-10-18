@@ -18,4 +18,5 @@ public interface IGameplayController
     public int GetNumPlaceableBuildings();
     public void AddPlaceableBuilding();
     public bool IsSpawnbuildingAvailible();
+    public bool TrySpawnbuilding(Vector3 SpawnPosition);
 }
