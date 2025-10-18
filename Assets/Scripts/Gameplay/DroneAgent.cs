@@ -20,12 +20,12 @@ public class DroneAgent : AllyUnit
     private float curStateTime;
     private EDroneState curState = EDroneState.Idle;
 
-    private void Start()
+    protected override void Start()
     {
         curPatrolCenter = transform.position;
         curStateTime = Random.Range(0, idleTimeAvg + idleTimeVar);
 
-        base.OnStart();
+        base.Start();
     }
 
     private void Update()

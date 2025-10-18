@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour, IGameplayController
 {
-    public List<AllyUnit> allyUnits;
     public List<DroneAgent> droneAgents;
     public List<PlanningAgent> planningAgents;
-    public List<EnemyUnit> enemyUnits;
     public EnemyBoss enemyBoss;
+    public List<BeetleEnemy> beetleEnemies;
 
     public float sensorTickTime;
 
     private float timeToNextSensorTick;
     private List<Entity> allVisibleEntities;
     private List<Entity> emptySmelledList;
+
+    private List<AllyUnit> allyUnits;
+    private List<EnemyUnit> enemyUnits;
+
 
     private void Start()
     {
@@ -23,7 +26,16 @@ public class GameController : MonoBehaviour, IGameplayController
         // Pre-allocate lists for performance
         allVisibleEntities = new List<Entity>();
         emptySmelledList = new List<Entity>();
-        
+
+        allyUnits = new List<AllyUnit>();
+        allyUnits.AddRange(droneAgents);
+        allyUnits.AddRange(planningAgents);
+
+        enemyUnits = new List<EnemyUnit>(); 
+        enemyUnits.AddRange(beetleEnemies);
+        if (enemyBoss != null)
+            enemyUnits.Add(enemyBoss);
+
         // Build the list of all visible entities once
         RefreshVisibleEntities();
     }
@@ -87,6 +99,15 @@ public class GameController : MonoBehaviour, IGameplayController
             List<Entity> sightedEntities = GetEntitiesInRange(ally, ally.sightRange, allVisibleEntities);
             ally.ApplySenses(emptySmelledList, sightedEntities);
         }
+
+        // Handle beetle enemies
+        foreach (var beetle in beetleEnemies)
+        {
+            if (beetle == null) continue;
+            
+            List<Entity> sightedAllies = GetAlliesInRange(beetle, beetle.sightRange);
+            beetle.ApplySenses(sightedAllies);
+        }
     }
 
     private List<Entity> GetEntitiesInRange(AllyUnit ally, float range, List<Entity> entitiesToCheck)
@@ -106,6 +127,25 @@ public class GameController : MonoBehaviour, IGameplayController
         }
         
         return entitiesInRange;
+    }
+
+    private List<Entity> GetAlliesInRange(BeetleEnemy beetle, float range)
+    {
+        List<Entity> alliesInRange = new List<Entity>();
+        float rangeSqr = range * range; // Use squared distance for performance
+        
+        foreach (var ally in allyUnits)
+        {
+            if (ally == null) continue;
+            
+            float distanceSqr = (beetle.transform.position - ally.transform.position).sqrMagnitude;
+            if (distanceSqr <= rangeSqr)
+            {
+                alliesInRange.Add(ally);
+            }
+        }
+        
+        return alliesInRange;
     }
 
     public Points GetPoints()
