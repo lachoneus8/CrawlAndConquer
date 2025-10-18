@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IGameplayController
 {
     public List<AllyUnit> allyUnits;
     public List<DroneAgent> droneAgents;
@@ -108,6 +108,10 @@ public class GameController : MonoBehaviour
         return entitiesInRange;
     }
 
+    public Points GetPoints()
+    {
+        throw new NotImplementedException();
+    }
     private List<PlanningAgent> GetNearbyPlanners(PlanningAgent planner)
     {
         List<PlanningAgent> nearbyPlanners = new List<PlanningAgent>();
