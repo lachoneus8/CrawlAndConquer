@@ -1,0 +1,172 @@
+# Coordinated Exploration Implementation Plan
+# For Planning Agents in CrawlAndConquer
+
+## Overview
+Implement a system where Planning Agents methodically explore the battlefield through coordination, avoiding redundant exploration while maintaining their existing combat and reconnaissance capabilities.
+
+## Phase 1: Enhanced BattlefieldIntel Class
+
+### 1.1 Add Exploration Data Fields
+- Add `Vector3 exploredPosition` - position that was explored
+- Add `float explorationRadius` - area covered by this exploration
+- Add `int agentId` - unique identifier for the exploring agent
+- Add `bool isExplorationIntel` - flag to distinguish exploration from enemy intel
+
+### 1.2 Add New Constructor
+- Create overloaded constructor for exploration intel: `BattlefieldIntel(Vector3 exploredPos, float radius, int agentId)`
+- Set `isExplorationIntel = true` for exploration data
+- Set `threatLevel = 0f` for exploration intel
+
+### 1.3 Add Utility Methods
+- `bool IsPositionExplored(Vector3 position)` - check if position is within explored area
+- `bool IsExplorationValid(float maxAge = 30f)` - check if exploration data is still current
+
+## Phase 2: Grid-Based Exploration Tracking
+
+### 2.1 Static Grid System
+- Create static arrays shared across all Planning Agents:
+  - `static bool[] gridExplored` - tracks which grid cells have been explored
+  - `static float[] gridExplorationTime` - tracks when each cell was explored
+  - `static int gridSize = 32` - 32x32 grid covering battlefield
+  - `static float cellSize = 2f` - each cell represents 2x2 world units
+
+### 2.2 Grid Conversion Methods
+- `Vector2Int WorldToGrid(Vector3 worldPos)` - convert world position to grid coordinates
+- `Vector3 GridToWorld(Vector2Int gridPos)` - convert grid coordinates to world position
+- `int GridPosToIndex(Vector2Int gridPos)` - convert grid position to array index
+- `Vector2Int IndexToGridPos(int index)` - convert array index to grid position
+
+### 2.3 Grid Management
+- `void InitializeExplorationGrid()` - initialize grid arrays on first agent start
+- `void MarkAreaAsExplored(Vector3 worldPos, float radius)` - mark circular area as explored
+- `bool IsPositionExplored(Vector3 position)` - check if grid cell is explored and current
+
+## Phase 3: Enhanced PlanningAgent
+
+### 3.1 New Fields
+- `List<BattlefieldIntel> explorationIntel` - separate list for exploration data
+- `int agentId` - unique identifier (use GetInstanceID())
+- `float explorationRadius = 3f` - how much area each exploration covers
+- `float explorationValidTime = 30f` - how long exploration intel stays valid
+
+### 3.2 Enhanced ApplySenses Method
+- Add call to `UpdateExplorationIntel()` after updating enemy intel
+- Share both enemy intel and recent exploration intel with nearby planners
+- Add `ReceiveExplorationIntel(BattlefieldIntel explorationData)` method
+
+### 3.3 Coordinated Exploration Logic
+- Replace `GenerateExplorationTarget()` with `GenerateCoordinatedExplorationTarget()`
+- Implement `FindBestExplorationTarget()` with scoring system
+- Implement `CalculateExplorationScore(Vector3 position)` to prioritize unexplored areas
+
+### 3.4 Exploration Scoring System
+Scoring factors:
+- Base score: 1.0
+- Already explored by this agent: -0.8
+- Explored by other agents (shared intel): -0.6
+- Distance from origin bonus: +0.2 * (distance / maxDistance)
+- Age of exploration data affects validity
+
+### 3.5 Modified State Handling
+- Replace `HandleExplorationState()` with `HandleCoordinatedExplorationState()`
+- Mark areas as explored when reaching exploration targets
+- Generate new coordinated targets after reaching current target
+
+## Phase 4: Intel Sharing Enhancement
+
+### 4.1 Exploration Intel Sharing
+- Share recent exploration intel (last 5 seconds) with nearby Planning Agents
+- Clean up old exploration intel regularly (remove data older than explorationValidTime)
+- Prevent sharing duplicate exploration data
+
+### 4.2 Communication Protocol
+- Maintain existing enemy intel sharing
+- Add exploration intel sharing in `ShareIntelWithNearbyPlanners()`
+- Update grid knowledge when receiving exploration intel from other agents
+
+## Phase 5: Visual Debugging
+
+### 5.1 Enhanced Gizmos
+- Draw exploration radius around current agent position (cyan circle)
+- Draw explored grid cells as transparent green cubes in `OnDrawGizmosSelected()`
+- Show exploration targets differently from attack targets
+- Color-code exploration age (newer = brighter green, older = darker)
+
+### 5.2 Debug Information
+- Display current exploration score for target positions
+- Show number of explored vs unexplored grid cells
+- Visualize exploration intel from other agents differently
+
+## Phase 6: Integration Points
+
+### 6.1 Backward Compatibility
+- Ensure existing enemy intel system continues to work unchanged
+- Maintain all existing state transitions and behaviors
+- Exploration coordination only affects low-threat exploration behavior
+
+### 6.2 Performance Considerations
+- Grid operations are O(1) for position checks
+- Clean up old exploration intel regularly to prevent memory bloat
+- Limit exploration target calculation iterations (max 20 attempts)
+- Use static arrays to share data efficiently between agents
+
+## Phase 7: Configuration Parameters
+
+### 7.1 Tunable Values
+- `gridSize` - battlefield coverage (32x32 default)
+- `cellSize` - resolution of exploration tracking (2f default)
+- `explorationRadius` - area covered per exploration point (3f default)
+- `explorationValidTime` - how long exploration intel lasts (30f default)
+- `maxExplorationAttempts` - target generation attempts (20 default)
+
+### 7.2 Scoring Weights
+- Self-explored penalty: -0.8
+- Other-explored penalty: -0.6
+- Distance bonus multiplier: 0.2
+- Base exploration score: 1.0
+
+## Implementation Order
+
+1. **BattlefieldIntel Enhancement** - Add exploration fields and methods
+2. **Grid System** - Implement static grid tracking arrays and conversion methods
+3. **PlanningAgent Fields** - Add exploration-specific fields and initialization
+4. **Coordination Logic** - Implement coordinated target selection
+5. **Intel Sharing** - Add exploration intel sharing to communication system
+6. **State Integration** - Modify exploration state to use coordinated system
+7. **Visual Debugging** - Add gizmos and debug visualization
+8. **Testing & Tuning** - Adjust parameters for optimal coordination
+
+## Future Enhancements
+
+### Potential Improvements
+- Dynamic grid sizing based on battlefield bounds
+- Exploration priority zones (player-defined areas of interest)
+- Formation-based exploration (agents maintain relative positions)
+- Obstacle avoidance in exploration pathfinding
+- Integration with pheromone system for exploration trails
+
+### Advanced Features
+- Hierarchical exploration (macro areas -> micro exploration)
+- Adaptive exploration radius based on agent sensor ranges
+- Exploration efficiency metrics and reporting
+- Player visualization of exploration coverage
+
+## Testing Strategy
+
+### Unit Tests
+- Grid conversion accuracy
+- Exploration scoring correctness
+- Intel sharing functionality
+- Grid marking and checking
+
+### Integration Tests
+- Multiple agents coordinating exploration
+- Exploration intel aging and cleanup
+- State transitions during exploration
+- Performance with many agents
+
+### Gameplay Tests
+- Agents avoid redundant exploration
+- Complete battlefield coverage over time
+- Smooth transition between exploration and combat
+- Visual debugging accuracy
