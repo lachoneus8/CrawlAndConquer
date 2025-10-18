@@ -31,8 +31,9 @@ public class BuildingPlacement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && controller.TrySpawnbuilding())
-        { 
+        if (Input.GetMouseButtonDown(0) && controller.IsSpawnbuildingAvailible())
+        {
+            //audioSource.PlayOneShot(spawnbuildingSFX);
         }
     }
 }

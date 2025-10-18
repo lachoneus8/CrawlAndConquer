@@ -279,8 +279,16 @@ public class GameController : MonoBehaviour, IGameplayController
         throw new NotImplementedException();
     }
 
-    public bool TrySpawnbuilding()
+    public bool IsSpawnbuildingAvailible()
     {
         throw new NotImplementedException();
+        /*
+        if (NumPlaceableBuildings <= 0)
+        {
+            NumPlaceableBuildings = 0;
+            return false;
+        }
+        NumPlaceableBuildings--;
+        return true;*/
     }
 }

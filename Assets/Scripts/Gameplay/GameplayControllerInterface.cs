@@ -17,5 +17,5 @@ public interface IGameplayController
     public bool IsGameOver();
     public int GetNumPlaceableBuildings();
     public void AddPlaceableBuilding();
-    public bool TrySpawnbuilding();
+    public bool IsSpawnbuildingAvailible();
 }
