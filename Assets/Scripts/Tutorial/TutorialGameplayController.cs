@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TutorialGameplayController : MonoBehaviour, IGameplayController
 {
-    TutorialMenuController tutorialMenuController;
+    public TutorialMenuController tutorialMenuController;
     [Tooltip("tutorial steps start index at 1")]
     public int currentTutorialStep = 1;
     [Header("step 1 : Camera Controls")]
@@ -33,22 +33,33 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     {
         return points;
     }
+    public void GoBackTutorialStep()
+    {
+        currentTutorialStep -= 1;
+        tutorialMenuController.SetTutorialScene(currentTutorialStep - 1);//adjust for array index
+    }
 
     public void GoNextTutorialStep() {
-        switch (currentTutorialStep) {
-            case 1://setup step 2 : How units move
+        currentTutorialStep+=1;
+        tutorialMenuController.SetTutorialScene(currentTutorialStep - 1);//adjust for array index
+    }
+
+    public void SetupTutorialStep() {
+        switch (currentTutorialStep){
+            case 1://setup step 1 : Camera Controls
                 return;
-            case 2://setup step 3 : Building Functions
+            case 2://setup step 2 : How units move
                 return;
-            case 3://setup step 4 : Placing Buildings
+            case 3://setup step 3 : Building Functions
                 return;
-            case 4://setup step 5 : Winning the game
+            case 4://setup step 4 : Placing Buildings
+                return;
+            case 5://setup step 5 : Winning the game
                 return;
             default:
                 Debug.LogWarning("moved to an invalid tutorial step");
                 tutorialMenuController.LoadMainGameScene();
                 return;
         }
-        
     }
 }
