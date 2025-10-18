@@ -7,11 +7,14 @@ public class VictoryBarDisplay : MonoBehaviour
     [Tooltip("Prefab for displaying victory progress in the bar. will be scaled according to how close to victory")]
     public RectTransform ProgressBarSegment;
 
-    public IGameplayController controller;
+    [Tooltip("Game object in scene that has a component that implements IGameplayController")]
+    public GameObject gameplayController;
+    private IGameplayController controller;
     //todo move score to gameplay controller
 
     void Start()
     {
+        controller = gameplayController.GetComponent<IGameplayController>();
         UpdateBar();
     }
 
