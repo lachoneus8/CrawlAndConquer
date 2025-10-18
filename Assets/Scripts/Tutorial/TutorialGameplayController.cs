@@ -62,4 +62,19 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
                 return;
         }
     }
+
+    public bool IsGameOver()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public int GetNumPlaceableBuildings()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void AddPlaceableBuilding()
+    {
+        throw new System.NotImplementedException();
+    }
 }

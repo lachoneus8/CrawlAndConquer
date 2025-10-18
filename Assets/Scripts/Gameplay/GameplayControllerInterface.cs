@@ -14,4 +14,7 @@ public struct Points
 public interface IGameplayController
 {
     public Points GetPoints();
+    public bool IsGameOver();
+    public int GetNumPlaceableBuildings();
+    public void AddPlaceableBuilding();
 }

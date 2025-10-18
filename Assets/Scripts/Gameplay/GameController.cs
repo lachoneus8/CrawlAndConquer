@@ -263,4 +263,19 @@ public class GameController : MonoBehaviour, IGameplayController
         if (enemyBoss != null) count++;
         return count;
     }
+
+    public bool IsGameOver()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetNumPlaceableBuildings()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddPlaceableBuilding()
+    {
+        throw new NotImplementedException();
+    }
 }
