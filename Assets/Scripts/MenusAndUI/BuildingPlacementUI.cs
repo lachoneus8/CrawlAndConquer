@@ -48,18 +48,19 @@ public class BuildingPlacementUI : MonoBehaviour
             if (controller.GetNumPlaceableBuildings(buildingType) >= MaxCharges)
             {
                 //Debug.Log("player at max number of charges for placeable buildings");
-                UpdateUI();
-                return;
+            }
+            else
+            {
+                timeTillAvailible -= Time.deltaTime;
+
+                if (timeTillAvailible <= 0)
+                {
+                    controller.AddPlaceableBuilding(buildingType);
+                    timeTillAvailible = rechargeTime;
+                }
             }
         }
 
-        timeTillAvailible -= Time.deltaTime;
-
-        if (timeTillAvailible <= 0)
-        {
-            controller.AddPlaceableBuilding(buildingType);
-            timeTillAvailible = rechargeTime;
-        }
         if (Input.GetMouseButtonDown(0) && isBuildingSelectedForPlacement && controller.IsSpawnbuildingAvailible(buildingType))
         {
 
