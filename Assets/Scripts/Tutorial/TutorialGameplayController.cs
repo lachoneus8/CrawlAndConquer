@@ -12,6 +12,7 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     [Header("step 4 : Placing Buildings")]
 
     [Header("step 5 : Winning the game")]
+
     [Tooltip("setup victory conditions")]
     public Points points;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
