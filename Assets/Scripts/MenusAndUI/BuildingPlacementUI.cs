@@ -65,6 +65,7 @@ public class BuildingPlacementUI : MonoBehaviour
         {
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
             controller.TrySpawnbuilding(mousePosition, buildingType, buildingPrefab);
             //audioSource.PlayOneShot(spawnbuildingSFX);
         }
