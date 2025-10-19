@@ -59,9 +59,6 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
 
     public void SetupTutorialStep(int step)
     {
-        foreach (GameObject entity in spawnedEntities) {
-            //Destroy(entity);
-        }
         CameraMovement cameraMovement = mainCamera.GetComponent<CameraMovement>();
         LordScorpion.SetActive(false);
         cameraMovement.panSpeed = 0;
