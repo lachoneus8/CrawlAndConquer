@@ -125,8 +125,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableCollisionDestruction: 1
-  sightRange: 12
+  sightRange: 20
   moveSpeed: 1.8
+  maxHealth: 100
+  currentHealth: 20
+  healthThreshold: 60
+  healthPerBeetle: 10
+  damagePerHit: 7
+  minScale: 0.5
+  maxScale: 3
+  scaleSpeed: 2
+  attackMoveSpeed: 3
 --- !u!61 &5343794052830611732
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -35,15 +35,19 @@ public class Entity : MonoBehaviour
         {
             // Notify GameController before destruction
             GameController gameController = FindFirstObjectByType<GameController>();
-            if (gameController != null)
+            
+            // Destroy any entity if they aren't the boss
+            if (this is not EnemyBoss)
             {
+                Destroy(this.gameObject);
                 gameController.OnEntityDestroyed(this);
-                gameController.OnEntityDestroyed(otherEntity);
             }
 
-            // Destroy both entities
-            Destroy(this.gameObject);
-            Destroy(otherEntity.gameObject);
+            if (otherEntity is not EnemyBoss)
+            {
+                Destroy(otherEntity.gameObject);
+                gameController.OnEntityDestroyed(otherEntity);
+            }
         }
     }
 }

@@ -174,12 +174,33 @@ public class GameController : MonoBehaviour, IGameplayController
         {
             if (beetle == null) continue;
             
-            List<Entity> sightedAllies = GetAlliesInRange(beetle, beetle.sightRange);
-            beetle.ApplySenses(sightedAllies);
+            List<Entity> sightedEntities = GetEntitiesInRange(beetle, beetle.sightRange, allVisibleEntities);
+
+
+
+            beetle.ApplySenses(sightedEntities);
+        }
+
+        // Handle enemy boss
+        if (enemyBoss != null)
+        {
+            List<Entity> bossVisibleEntities = new List<Entity>();
+            bossVisibleEntities.AddRange(GetAlliesInRange(enemyBoss, enemyBoss.sightRange));
+            // Also add beetles in range so boss can see them
+            foreach (var beetle in beetleEnemies)
+            {
+                if (beetle == null) continue;
+                float distance = Vector3.Distance(enemyBoss.transform.position, beetle.transform.position);
+                if (distance <= enemyBoss.sightRange)
+                {
+                    bossVisibleEntities.Add(beetle);
+                }
+            }
+            enemyBoss.ApplySenses(bossVisibleEntities);
         }
     }
 
-    private List<Entity> GetEntitiesInRange(AllyUnit ally, float range, List<Entity> entitiesToCheck)
+    private List<Entity> GetEntitiesInRange(Entity sourceEntity, float range, List<Entity> entitiesToCheck)
     {
         List<Entity> entitiesInRange = new List<Entity>();
         float rangeSqr = range * range; // Use squared distance for performance
@@ -188,7 +209,7 @@ public class GameController : MonoBehaviour, IGameplayController
         {
             if (entity == null) continue;
             
-            float distanceSqr = (ally.transform.position - entity.transform.position).sqrMagnitude;
+            float distanceSqr = (sourceEntity.transform.position - entity.transform.position).sqrMagnitude;
             if (distanceSqr <= rangeSqr)
             {
                 entitiesInRange.Add(entity);
@@ -198,7 +219,7 @@ public class GameController : MonoBehaviour, IGameplayController
         return entitiesInRange;
     }
 
-    private List<Entity> GetAlliesInRange(BeetleEnemy beetle, float range)
+    private List<Entity> GetAlliesInRange(EnemyUnit enemy, float range)
     {
         List<Entity> alliesInRange = new List<Entity>();
         float rangeSqr = range * range; // Use squared distance for performance
@@ -207,7 +228,7 @@ public class GameController : MonoBehaviour, IGameplayController
         {
             if (ally == null) continue;
             
-            float distanceSqr = (beetle.transform.position - ally.transform.position).sqrMagnitude;
+            float distanceSqr = (enemy.transform.position - ally.transform.position).sqrMagnitude;
             if (distanceSqr <= rangeSqr)
             {
                 alliesInRange.Add(ally);

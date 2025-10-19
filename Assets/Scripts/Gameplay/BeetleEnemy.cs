@@ -8,7 +8,8 @@ public class BeetleEnemy : EnemyUnit
         Idle,
         Wander,
         MoveTo,
-        Attack
+        Attack,
+        SeekBoss    // New state for seeking the boss
     }
 
     public float idleTimeAvg = 3f;
@@ -46,6 +47,9 @@ public class BeetleEnemy : EnemyUnit
             case EBeetleState.Attack:
                 HandleAttackState();
                 break;
+            case EBeetleState.SeekBoss:
+                HandleSeekBossState();
+                break;
         }
     }
 
@@ -53,13 +57,23 @@ public class BeetleEnemy : EnemyUnit
     {
         base.ApplySenses(sightedEntities);
         
-        // Aggressive behavior: React to visible allies
-        ProcessAggressiveBehavior();
+        // Aggressive behavior: React to visible entities
+        ProcessBehavior();
     }
 
-    private void ProcessAggressiveBehavior()
+    private void ProcessBehavior()
     {
-        // Priority 1: Attack visible allies
+        // Priority 1: Seek boss if it's visible and in growing mode
+        EnemyBoss boss = GetVisibleBoss(sightRangeEntities);
+        if (boss != null && boss.ShouldAttractBeetles())
+        {
+            SetMoveTarget(boss.transform.position);
+            curState = EBeetleState.SeekBoss;
+            SetWalk(true);
+            return;
+        }
+
+        // Priority 2: Attack visible allies
         if (sightRangeEntities != null && sightRangeEntities.Count > 0)
         {
             Entity closestAlly = GetClosestAlly(sightRangeEntities);
@@ -72,7 +86,28 @@ public class BeetleEnemy : EnemyUnit
             }
         }
 
-        // Priority 2: Continue current behavior (wander/idle)
+        // Priority 3: Continue current behavior (wander/idle) if not seeking boss or allies
+        if (curState == EBeetleState.SeekBoss)
+        {
+            // Boss is no longer visible or attracting, return to wandering
+            curState = EBeetleState.Idle;
+            curStateTime = Random.Range(idleTimeAvg - idleTimeVar, idleTimeAvg + idleTimeVar);
+            SetWalk(false);
+        }
+    }
+
+    private EnemyBoss GetVisibleBoss(List<Entity> entities)
+    {
+        if (entities == null) return null;
+
+        foreach (Entity entity in entities)
+        {
+            if (entity is EnemyBoss boss)
+            {
+                return boss;
+            }
+        }
+        return null;
     }
 
     private Entity GetClosestAlly(List<Entity> entities)
@@ -151,6 +186,20 @@ public class BeetleEnemy : EnemyUnit
         }
     }
 
+    private void HandleSeekBossState()
+    {
+        // Move towards the boss
+        if (HasReachedTarget(curMoveTarget, 0.5f)) // Larger threshold for boss
+        {
+            // We've reached the boss, collision should handle the rest
+            SetWalk(false);
+        }
+        else
+        {
+            MoveToTarget(curMoveTarget);
+        }
+    }
+
     private void HandleAttackState()
     {
         // TODO: Implement actual attack behavior (damage, animation, etc.)
@@ -217,10 +266,17 @@ public class BeetleEnemy : EnemyUnit
             Gizmos.DrawWireSphere(transform.position, maxDistanceFromOrigin);
         }
 
-        // Draw current target if wandering
-        if (Application.isPlaying && curState == EBeetleState.Wander)
+        // Draw sight range (used for boss detection)
+        Gizmos.color = Color.cyan;
+        if (Application.isPlaying)
         {
-            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, sightRange);
+        }
+
+        // Draw current target
+        if (Application.isPlaying && (curState == EBeetleState.Wander || curState == EBeetleState.SeekBoss))
+        {
+            Gizmos.color = curState == EBeetleState.SeekBoss ? Color.red : Color.green;
             Gizmos.DrawWireSphere(curMoveTarget, 0.3f);
             Gizmos.DrawLine(transform.position, curMoveTarget);
         }
