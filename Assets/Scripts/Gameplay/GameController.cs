@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour, IGameplayController
 {
@@ -76,6 +77,18 @@ public class GameController : MonoBehaviour, IGameplayController
         
         // Process entity removal at end of frame
         ProcessEntityRemoval();
+        
+
+        if (GetAllyCount() == 0)
+        {
+            Debug.Log("All allies are dead. Game Over.");
+            SceneManager.LoadScene("Defeat");
+        }
+        if (enemyBoss == null || enemyBoss.IsAlive() == false)
+        {
+            Debug.Log("Enemy boss defeated. You win!");
+            SceneManager.LoadScene("Victory");
+        }
     }
 
     public void OnEntityDestroyed(Entity entity)
@@ -335,7 +348,23 @@ public class GameController : MonoBehaviour, IGameplayController
 
     public int GetAllyCount()
     {
-        return droneAgents.Count + planningAgents.Count;
+        int count = 0;
+        
+        // Count non-null drone agents
+        foreach (var drone in droneAgents)
+        {
+            if (drone != null)
+                count++;
+        }
+        
+        // Count non-null planning agents
+        foreach (var planner in planningAgents)
+        {
+            if (planner != null)
+                count++;
+        }
+        
+        return count;
     }
 
     public int GetEnemyCount()
