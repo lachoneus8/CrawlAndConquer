@@ -66,6 +66,7 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
             case 1://setup step 1 : Camera Controls
                 //spawnedEntities.Add(Instantiate(step1AlliesPrefab));
                 //spawnedEntities.Add(Instantiate(step1EnemiesPrefab));
+                mainCamera.transform.position = new Vector3(0, 0, -10);
                 cameraMovement.panSpeed = 20;
                 return;
             case 2://setup step 2 : How units move
