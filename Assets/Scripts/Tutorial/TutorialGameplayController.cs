@@ -64,13 +64,15 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
         }
         CameraMovement cameraMovement = mainCamera.GetComponent<CameraMovement>();
         LordScorpion.SetActive(false);
-        cameraMovement.panSpeed = 20;
+        cameraMovement.panSpeed = 0;
         switch (step){
             case 1://setup step 1 : Camera Controls
                 //spawnedEntities.Add(Instantiate(step1AlliesPrefab));
                 //spawnedEntities.Add(Instantiate(step1EnemiesPrefab));
+                cameraMovement.panSpeed = 20;
                 return;
             case 2://setup step 2 : How units move
+                mainCamera.transform.position = new Vector3(-20, 20, -10);
                 return;
             case 3://setup step 3 : Building Functions
                 return;
