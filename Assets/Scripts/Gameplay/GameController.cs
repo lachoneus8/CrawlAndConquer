@@ -33,6 +33,9 @@ public class GameController : MonoBehaviour, IGameplayController
     public int beetleMaxRange;
     public GameObject beetlePrefab;
 
+    public AudioSource audioSource;
+    public AudioClip backgroundMusic;
+
     private float timeToNextSensorTick;
     private List<Entity> allVisibleEntities;
     private List<Entity> allSmellableEntities; 
