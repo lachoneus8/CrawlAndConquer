@@ -47,7 +47,7 @@ public class BuildingPlacementUI : MonoBehaviour
         {
             if (controller.GetNumPlaceableBuildings(buildingType) >= MaxCharges)
             {
-                Debug.Log("player at max number of charges for placeable buildings");
+                //Debug.Log("player at max number of charges for placeable buildings");
                 UpdateUI();
                 return;
             }
@@ -84,8 +84,8 @@ public class BuildingPlacementUI : MonoBehaviour
         isBuildingSelectedForPlacement = !isBuildingSelectedForPlacement;
         if(!(otherBuildingPlacementUIs is null)) { 
             foreach (BuildingPlacementUI building in otherBuildingPlacementUIs) {
-               building.isBuildingSelectedForPlacement = false;
-                building.selectedIndicator.SetActive(isBuildingSelectedForPlacement);
+                building.isBuildingSelectedForPlacement = false;
+                building.selectedIndicator.SetActive(building.isBuildingSelectedForPlacement);
             }
         }
         selectedIndicator.SetActive(isBuildingSelectedForPlacement);

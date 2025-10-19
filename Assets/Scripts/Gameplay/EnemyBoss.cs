@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBoss : EnemyUnit
@@ -34,14 +35,28 @@ public class EnemyBoss : EnemyUnit
     private float originalMoveSpeed; // Store original move speed
     private float searchAngle = 0f; // Current angle for circular search pattern
 
+    private float startHealth;
+
     // Events for health bar and other systems
     public System.Action<float, float> OnHealthChanged; // currentHealth, maxHealth
     public System.Action OnBossDeath;
 
+    public Points GetPoints()
+    {
+        return new Points()
+        {
+            startingPoints = (uint)(maxHealth - startHealth),
+            currentPoints = (uint)(maxHealth - currentHealth),
+            victoryPoints = (uint)maxHealth
+        };
+    }
+    
     protected override void Start()
     {
         base.Start();
-        
+
+        startHealth = currentHealth;
+
         // Store original move speed
         originalMoveSpeed = moveSpeed;
         

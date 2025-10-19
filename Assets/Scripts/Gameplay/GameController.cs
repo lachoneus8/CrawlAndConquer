@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour, IGameplayController
 {
+    [Serializable]
+    public class BuildingInfoEntry
+    {
+        public BuildingType buildingType;
+        public int numPlaceableBuildings;
+    }
+
     public List<DroneAgent> droneAgents;
     public List<PlanningAgent> planningAgents;
     public EnemyBoss enemyBoss;
@@ -13,6 +20,12 @@ public class GameController : MonoBehaviour, IGameplayController
     public List<PheromoneBeacon> pheromoneBeacons;
 
     public float sensorTickTime;
+
+    public List<BuildingInfoEntry> buildingInfoList;
+
+    public Transform pheremoneBeaconParent;
+    public Transform enemyParent;
+    public Transform allyParent;
 
     private float timeToNextSensorTick;
     private List<Entity> allVisibleEntities;
@@ -268,7 +281,7 @@ public class GameController : MonoBehaviour, IGameplayController
 
     public Points GetPoints()
     {
-        throw new NotImplementedException();
+        return enemyBoss.GetPoints();
     }
 
     private List<PlanningAgent> GetNearbyPlanners(PlanningAgent planner)
@@ -315,34 +328,65 @@ public class GameController : MonoBehaviour, IGameplayController
 
     public bool IsGameOver()
     {
-        throw new NotImplementedException();
+        return enemyBoss != null && !enemyBoss.IsAlive();
     }
 
     public int GetNumPlaceableBuildings(BuildingType type)
     {
-        throw new NotImplementedException();
+        var buildingInfo = buildingInfoList.Find(buildingInfoList => buildingInfoList.buildingType == type);
+
+        if (buildingInfo == null)
+        {
+            Debug.Log("No building info found for type: " + type);
+            return 0;
+        }
+
+        return buildingInfo.numPlaceableBuildings;
     }
 
     public void AddPlaceableBuilding(BuildingType type)
     {
-        throw new NotImplementedException();
+        var buildingInfo = buildingInfoList.Find(buildingInfoList => buildingInfoList.buildingType == type);
+
+        if (buildingInfo == null)
+        {
+            Debug.Log("No building info found for type: " + type);
+            return;
+        }
+
+        buildingInfo.numPlaceableBuildings += 1;
     }
 
     public bool IsSpawnbuildingAvailible(BuildingType type)
     {
-        throw new NotImplementedException();
-        /*
-        if (NumPlaceableBuildings <= 0)
+        var buildingInfo = buildingInfoList.Find(buildingInfoList => buildingInfoList.buildingType == type);
+        if (buildingInfo != null)
         {
-            NumPlaceableBuildings = 0;
-            return false;
+            return buildingInfo.numPlaceableBuildings > 0;
         }
-        NumPlaceableBuildings--;
-        return true;*/
+
+        Debug.Log("No building info found for type: " + type);
+        return false;
     }
 
     public bool TrySpawnbuilding(Vector3 SpawnPosition, BuildingType type, GameObject prefab)
     {
-        throw new NotImplementedException();
+        switch (type)
+        {
+            case BuildingType.Beacon:
+                var beaconGameObject = Instantiate(prefab, SpawnPosition, Quaternion.identity, pheremoneBeaconParent);
+                var beacon = beaconGameObject.GetComponent<PheromoneBeacon>();
+                pheromoneBeacons.Add(beacon);
+                var beaconInfo = buildingInfoList.Find(buildingInfoList => buildingInfoList.buildingType == type);
+                if (beaconInfo != null)
+                {
+                    beaconInfo.numPlaceableBuildings -= 1;
+                }
+                return true;
+            case BuildingType.WorkerSpawner:
+            default:
+                Debug.Log("Unknown building type: " + type);
+                return false;
+        }
     }
 }
