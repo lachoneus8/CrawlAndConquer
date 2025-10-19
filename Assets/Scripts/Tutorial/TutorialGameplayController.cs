@@ -9,6 +9,8 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     [Tooltip("tutorial steps start index at 1")]
     public int currentTutorialStep = 1;
     [Header("step 1 : Camera Controls")]
+    GameObject step1EnemiesPrefab;
+    GameObject step1AlliesPrefab;
     [Header("step 2 : How units move")]
     [Header("step 3 : Building Functions")]
     [Header("step 4 : Placing Buildings")]
