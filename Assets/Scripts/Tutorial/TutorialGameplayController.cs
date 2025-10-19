@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class TutorialGameplayController : MonoBehaviour, IGameplayController
 {
+
+    public Camera mainCamera;
     public TutorialMenuController tutorialMenuController;
     [Tooltip("tutorial steps start index at 1")]
     public int currentTutorialStep = 1;
@@ -12,7 +14,8 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     [Header("step 4 : Placing Buildings")]
 
     [Header("step 5 : Winning the game")]
-
+    [Tooltip("He needs no introduction!!")]
+    public GameObject LordScorpion;
     [Tooltip("setup victory conditions")]
     public Points points;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,15 +44,21 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     {
         currentTutorialStep -= 1;
         tutorialMenuController.SetTutorialScene(currentTutorialStep - 1);//adjust for array index
+        SetupTutorialStep(currentTutorialStep);
     }
 
     public void GoNextTutorialStep() {
         currentTutorialStep+=1;
         tutorialMenuController.SetTutorialScene(currentTutorialStep - 1);//adjust for array index
+        SetupTutorialStep(currentTutorialStep);
     }
 
-    public void SetupTutorialStep() {
-        switch (currentTutorialStep){
+    public void SetupTutorialStep(int step)
+    {
+        CameraMovement cameraMovement = mainCamera.GetComponent<CameraMovement>();
+        LordScorpion.SetActive(false);
+        cameraMovement.panSpeed = 20;
+        switch (step){
             case 1://setup step 1 : Camera Controls
                 return;
             case 2://setup step 2 : How units move
@@ -59,6 +68,9 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
             case 4://setup step 4 : Placing Buildings
                 return;
             case 5://setup step 5 : Winning the game
+                cameraMovement.panSpeed = 0;
+                mainCamera.transform.position = new Vector3(0, 0, -10);
+                LordScorpion.SetActive(true);
                 return;
             default:
                 Debug.LogWarning("moved to an invalid tutorial step");
