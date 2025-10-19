@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour, IGameplayController
     public Transform pheremoneBeaconParent;
     public Transform enemyParent;
     public Transform allyParent;
+    public Transform spawnerParent;
 
     public int numBeetlesToSpawn;
     public int beetleMinRange;
@@ -432,9 +433,26 @@ public class GameController : MonoBehaviour, IGameplayController
                 }
                 return true;
             case BuildingType.WorkerSpawner:
+                var spawnerGameObject = Instantiate(prefab, SpawnPosition, Quaternion.identity, spawnerParent);
+                var spawner = spawnerGameObject.GetComponent<Spawner>();
+                spawner.OnSpawned.AddListener(OnSpawned);
+
+                var spawnerInfo = buildingInfoList.Find(buildingInfoList => buildingInfoList.buildingType == type);
+                if (spawnerInfo != null)
+                {
+                    spawnerInfo.numPlaceableBuildings -= 1;
+                }
+                return true;
             default:
                 Debug.Log("Unknown building type: " + type);
                 return false;
         }
+    }
+
+    private void OnSpawned(Transform spwanerTransform, GameObject prefab)
+    {
+        var droneGameObject = Instantiate(prefab, spwanerTransform.position, Quaternion.identity, allyParent);
+        var drone = droneGameObject.GetComponent<DroneAgent>();
+        droneAgents.Add(drone);
     }
 }

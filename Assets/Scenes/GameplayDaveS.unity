@@ -444,6 +444,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1172742946}
   m_SourcePrefab: {fileID: 100100000, guid: d98ea769b58102f4aaaad376f804fd8e, type: 3}
+--- !u!1 &231242192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231242193}
+  m_Layer: 0
+  m_Name: Spawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &231242193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231242192}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &287406047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,6 +1434,7 @@ MonoBehaviour:
   pheremoneBeaconParent: {fileID: 1342026485}
   enemyParent: {fileID: 948216636}
   allyParent: {fileID: 899340336}
+  spawnerParent: {fileID: 231242193}
   numBeetlesToSpawn: 20
   beetleMinRange: 12
   beetleMaxRange: 20
@@ -3829,6 +3861,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 231242193}
   - {fileID: 1342026485}
   - {fileID: 948216636}
   - {fileID: 899340336}
