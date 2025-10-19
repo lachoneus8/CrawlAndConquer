@@ -22,6 +22,8 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
     public Points points;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    List<GameObject> spawnedEntities;
+
     public Dictionary<BuildingType, int> buildingsAvailible = new Dictionary<BuildingType, int> { { BuildingType.Beacon, 0 }, { BuildingType.WorkerSpawner, 0 }, };
     void Start()
     {
@@ -57,11 +59,16 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
 
     public void SetupTutorialStep(int step)
     {
+        foreach (GameObject entity in spawnedEntities) {
+            //Destroy(entity);
+        }
         CameraMovement cameraMovement = mainCamera.GetComponent<CameraMovement>();
         LordScorpion.SetActive(false);
         cameraMovement.panSpeed = 20;
         switch (step){
             case 1://setup step 1 : Camera Controls
+                //spawnedEntities.Add(Instantiate(step1AlliesPrefab));
+                //spawnedEntities.Add(Instantiate(step1EnemiesPrefab));
                 return;
             case 2://setup step 2 : How units move
                 return;
