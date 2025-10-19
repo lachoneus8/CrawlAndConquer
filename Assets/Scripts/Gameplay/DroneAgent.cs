@@ -75,11 +75,38 @@ public class DroneAgent : AllyUnit
         // Priority 2: Follow pheromone trails (smelled entities)
         if (smellRangeEntities != null && smellRangeEntities.Count > 0)
         {
-            // TODO: Implement pheromone following behavior
-            // For now, just continue current behavior
+            PheromoneBeacon closestPheromone = GetClosestPheromone(smellRangeEntities);
+            if (closestPheromone != null)
+            {
+                SetMoveTarget(closestPheromone.transform.position);
+                curState = EDroneState.MoveTo;
+                SetWalk(true);
+                return;
+            }
         }
 
         // Priority 3: Continue current behavior (patrol/idle)
+    }
+
+    private PheromoneBeacon GetClosestPheromone(List<Entity> entities)
+    {
+        PheromoneBeacon closest = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Entity entity in entities)
+        {
+            if (entity is PheromoneBeacon pheromone)
+            {
+                float distance = Vector3.Distance(transform.position, pheromone.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closest = pheromone;
+                }
+            }
+        }
+
+        return closest;
     }
 
     private Entity GetClosestEnemy(List<Entity> enemies)

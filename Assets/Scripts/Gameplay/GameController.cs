@@ -9,11 +9,14 @@ public class GameController : MonoBehaviour, IGameplayController
     public EnemyBoss enemyBoss;
     public List<BeetleEnemy> beetleEnemies;
 
+    // Pheromone beacons
+    public List<PheromoneBeacon> pheromoneBeacons;
+
     public float sensorTickTime;
 
     private float timeToNextSensorTick;
     private List<Entity> allVisibleEntities;
-    private List<Entity> emptySmelledList;
+    private List<Entity> allSmellableEntities; 
 
     private List<AllyUnit> allyUnits;
     private List<EnemyUnit> enemyUnits;
@@ -27,7 +30,7 @@ public class GameController : MonoBehaviour, IGameplayController
         
         // Pre-allocate lists for performance
         allVisibleEntities = new List<Entity>();
-        emptySmelledList = new List<Entity>();
+        allSmellableEntities = new List<Entity>();
 
         allyUnits = new List<AllyUnit>();
         allyUnits.AddRange(droneAgents);
@@ -38,8 +41,9 @@ public class GameController : MonoBehaviour, IGameplayController
         if (enemyBoss != null)
             enemyUnits.Add(enemyBoss);
 
-        // Build the list of all visible entities once
+        // Build the list of all visible and smellable entities
         RefreshVisibleEntities();
+        RefreshSmellableEntities();
     }
 
     private void Update()
@@ -115,8 +119,15 @@ public class GameController : MonoBehaviour, IGameplayController
             enemyUnits.Remove(enemy);
         }
 
+        // Remove from pheromone lists
+        if (entity is PheromoneBeacon beacon)
+        {
+            pheromoneBeacons.Remove(beacon);
+        }
+
         // Remove from visible entities list
         allVisibleEntities.Remove(entity);
+        allSmellableEntities.Remove(entity);
     }
 
     private void RefreshVisibleEntities()
@@ -135,18 +146,35 @@ public class GameController : MonoBehaviour, IGameplayController
             allVisibleEntities.Add(enemyBoss);
     }
 
+    private void RefreshSmellableEntities()
+    {
+        allSmellableEntities.Clear();
+        
+        // Add all pheromone beacons
+        if (pheromoneBeacons != null)
+        {
+            foreach (var beacon in pheromoneBeacons)
+            {
+                if (beacon != null)
+                    allSmellableEntities.Add(beacon);
+            }
+        }
+    }
+
     private void SensorTick()
     {
-        // Refresh visible entities in case any were destroyed
+        // Refresh visible and smellable entities
         RefreshVisibleEntities();
+        RefreshSmellableEntities();
         
         // Handle drone agents (reflex agents)
-        foreach (var drone in droneAgents.ToArray()) // Use ToArray to avoid modification during iteration
+        foreach (var drone in droneAgents.ToArray())
         {
             if (drone == null) continue;
             
             List<Entity> sightedEntities = GetEntitiesInRange(drone, drone.sightRange, allVisibleEntities);
-            drone.ApplySenses(emptySmelledList, sightedEntities);
+            List<Entity> smelledEntities = GetEntitiesInRange(drone, drone.smellRange, allSmellableEntities);
+            drone.ApplySenses(smelledEntities, sightedEntities);
         }
         
         // Handle planning agents with enhanced communication
@@ -155,9 +183,10 @@ public class GameController : MonoBehaviour, IGameplayController
             if (planner == null) continue;
             
             List<Entity> sightedEntities = GetEntitiesInRange(planner, planner.sightRange, allVisibleEntities);
+            List<Entity> smelledEntities = GetEntitiesInRange(planner, planner.smellRange, allSmellableEntities);
             List<PlanningAgent> nearbyPlanners = GetNearbyPlanners(planner);
             
-            planner.ApplySenses(emptySmelledList, sightedEntities, nearbyPlanners);
+            planner.ApplySenses(smelledEntities, sightedEntities, nearbyPlanners);
         }
 
         // Handle any remaining ally units that aren't drones or planners
@@ -166,7 +195,8 @@ public class GameController : MonoBehaviour, IGameplayController
             if (ally == null || ally is DroneAgent || ally is PlanningAgent) continue;
             
             List<Entity> sightedEntities = GetEntitiesInRange(ally, ally.sightRange, allVisibleEntities);
-            ally.ApplySenses(emptySmelledList, sightedEntities);
+            List<Entity> smelledEntities = GetEntitiesInRange(ally, ally.smellRange, allSmellableEntities);
+            ally.ApplySenses(smelledEntities, sightedEntities);
         }
 
         // Handle beetle enemies
@@ -175,9 +205,6 @@ public class GameController : MonoBehaviour, IGameplayController
             if (beetle == null) continue;
             
             List<Entity> sightedEntities = GetEntitiesInRange(beetle, beetle.sightRange, allVisibleEntities);
-
-
-
             beetle.ApplySenses(sightedEntities);
         }
 
@@ -186,6 +213,7 @@ public class GameController : MonoBehaviour, IGameplayController
         {
             List<Entity> bossVisibleEntities = new List<Entity>();
             bossVisibleEntities.AddRange(GetAlliesInRange(enemyBoss, enemyBoss.sightRange));
+            
             // Also add beetles in range so boss can see them
             foreach (var beetle in beetleEnemies)
             {
@@ -313,7 +341,7 @@ public class GameController : MonoBehaviour, IGameplayController
         return true;*/
     }
 
-    public bool TrySpawnbuilding(Vector3 SpawnPosition, BuildingType type,GameObject prefab)
+    public bool TrySpawnbuilding(Vector3 SpawnPosition, BuildingType type, GameObject prefab)
     {
         throw new NotImplementedException();
     }
