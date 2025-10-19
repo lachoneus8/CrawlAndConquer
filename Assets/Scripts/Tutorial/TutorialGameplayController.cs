@@ -24,7 +24,7 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
 
     List<GameObject> spawnedEntities;
 
-    public Dictionary<BuildingType, int> buildingsAvailible = new Dictionary<BuildingType, int> { { BuildingType.Beacon, 0 }, { BuildingType.WorkerSpawner, 0 }, };
+    public Dictionary<BuildingType, int> buildingsAvailible = new Dictionary<BuildingType, int> { { BuildingType.Beacon, 1 }, { BuildingType.WorkerSpawner, 1 }, };
     void Start()
     {
         if (points.currentPoints == points.victoryPoints)
@@ -59,9 +59,6 @@ public class TutorialGameplayController : MonoBehaviour, IGameplayController
 
     public void SetupTutorialStep(int step)
     {
-        foreach (GameObject entity in spawnedEntities) {
-            //Destroy(entity);
-        }
         CameraMovement cameraMovement = mainCamera.GetComponent<CameraMovement>();
         LordScorpion.SetActive(false);
         cameraMovement.panSpeed = 0;
