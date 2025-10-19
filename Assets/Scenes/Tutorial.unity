@@ -1828,7 +1828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d63a89f01c2eb47885687d02d4de3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 435445063}
   tutorialMenuController: {fileID: 2058953987}
   currentTutorialStep: 1
   LordScorpion: {fileID: 0}
