@@ -37,6 +37,8 @@ public class EnemyBoss : EnemyUnit
 
     private float startHealth;
 
+    private Vector3? currentAttackTarget;
+
     // Events for health bar and other systems
     public System.Action<float, float> OnHealthChanged; // currentHealth, maxHealth
     public System.Action OnBossDeath;
@@ -274,11 +276,30 @@ public class EnemyBoss : EnemyUnit
 
     private void HandleAttackingState()
     {
-        // At Vector3.zero, stay in position and attack visible allies
-        // Boss remains stationary at origin unless attacking a specific ally
-        SetWalk(false);
-        
-        // Process attack behavior is handled in ApplySenses -> ProcessAttackBehavior
+        if (currentAttackTarget.HasValue)
+        {
+
+            // Move towards the current attack target
+            MoveToTarget(currentAttackTarget.Value);
+            SetWalk(true);
+            // Check if reached the attack target
+            if (HasReachedTarget(currentAttackTarget.Value, 0.5f))
+            {
+                currentAttackTarget = null; // Clear target to reassess
+            }
+        }
+        else
+        {
+            if (transform.position.magnitude > .5f)
+            {
+                // Not at origin, move back to origin
+                MoveToTarget(Vector3.zero);
+                SetWalk(true);
+                return;
+            }
+            // No current attack target, stay at origin
+            SetWalk(false);
+        }
     }
 
     private void ProcessAttackBehavior()
@@ -289,9 +310,7 @@ public class EnemyBoss : EnemyUnit
             AllyUnit closestAlly = GetClosestAlly(sightRangeEntities);
             if (closestAlly != null)
             {
-                // Move towards the closest ally to attack
-                MoveToTarget(closestAlly.transform.position);
-                SetWalk(true);
+                currentAttackTarget = closestAlly.transform.position;
             }
         }
         else

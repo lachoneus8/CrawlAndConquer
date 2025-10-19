@@ -170,6 +170,9 @@ public class DroneAgent : AllyUnit
                 }
             }
 
+            // Reset patrol center to the new location
+            curPatrolCenter = transform.position;
+
             // No valid target, return to patrol
             curState = EDroneState.Idle;
             curStateTime = Random.Range(idleTimeAvg - idleTimeVar, idleTimeAvg + idleTimeVar);

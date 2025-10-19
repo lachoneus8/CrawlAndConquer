@@ -1131,6 +1131,10 @@ MonoBehaviour:
   pheremoneBeaconParent: {fileID: 1342026485}
   enemyParent: {fileID: 948216636}
   allyParent: {fileID: 899340336}
+  numBeetlesToSpawn: 20
+  beetleMinRange: 12
+  beetleMaxRange: 20
+  beetlePrefab: {fileID: 107996916368728401, guid: dc9d096299356cb4ab74c196a7c470aa, type: 3}
 --- !u!4 &717452437
 Transform:
   m_ObjectHideFlags: 0

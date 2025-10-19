@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour, IGameplayController
 {
-    [Serializable]
+    [System.Serializable]
     public class BuildingInfoEntry
     {
         public BuildingType buildingType;
@@ -27,6 +26,11 @@ public class GameController : MonoBehaviour, IGameplayController
     public Transform enemyParent;
     public Transform allyParent;
 
+    public int numBeetlesToSpawn;
+    public int beetleMinRange;
+    public int beetleMaxRange;
+    public GameObject beetlePrefab;
+
     private float timeToNextSensorTick;
     private List<Entity> allVisibleEntities;
     private List<Entity> allSmellableEntities; 
@@ -48,6 +52,8 @@ public class GameController : MonoBehaviour, IGameplayController
         allyUnits = new List<AllyUnit>();
         allyUnits.AddRange(droneAgents);
         allyUnits.AddRange(planningAgents);
+
+        SpawnBeetles();
 
         enemyUnits = new List<EnemyUnit>(); 
         enemyUnits.AddRange(beetleEnemies);
@@ -78,6 +84,19 @@ public class GameController : MonoBehaviour, IGameplayController
         if (!entitiesToRemove.Contains(entity))
         {
             entitiesToRemove.Add(entity);
+        }
+    }
+
+    private void SpawnBeetles()
+    {
+        for (int i = 0; i < numBeetlesToSpawn; ++i)
+        {
+            Vector2 pos = Random.insideUnitCircle;
+            pos = pos.normalized * beetleMinRange + pos.normalized * Random.Range(0, beetleMaxRange - beetleMinRange);
+
+            var beetleGameObject = Instantiate(beetlePrefab, new Vector3(pos.x, pos.y, 0), Quaternion.identity, enemyParent);
+            var beetle = beetleGameObject.GetComponent<BeetleEnemy>();
+            beetleEnemies.Add(beetle);
         }
     }
 
